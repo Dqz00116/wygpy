@@ -22,12 +22,23 @@ class Catcher(object):
                           'HTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36 Edg/90.0.818.56'
         }
         # self.option 命令行参数
-        self.option = sys.argv[1]
+        try:
+            self.option = sys.argv[1]
+        except IndexError:
+            print("OptionError: No option, please enter option after 're_catch.py'\n"
+                  "Syntax: re_catch.py [option]\n"
+                  "[option]: card        获取公主链接卡面\n\t  title_bg    获取bangbang主题背景")
+            exit()
         # self.url_source 目标地址
         if self.option == 'card':
             self.url_source = 'https://redive.estertion.win/card/full/'
         elif self.option == 'title_bg':
             self.url_source = 'https://redive.estertion.win/bang/title_bg/'
+        else:
+            print("OptionError: Uncorrected option, please check option you enter\n"
+                  "Syntax: re_catch.py [option]\n"
+                  "[option]: card        获取公主链接卡面\n\t  title_bg    获取bangbang主题背景")
+            exit()
 
     # 创建/自动更新（迫真）文件夹
     def mkcard(self, option):
