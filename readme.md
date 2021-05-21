@@ -14,7 +14,7 @@
 
 `re_catch.py [option]`
 
-必须在接受参数才能启动，目前可接受的options:
+必须接受参数才能启动，目前可接受的options:
 
 - `card` : 获取公主链接卡面
 - `comic`: 获取公主链接小漫画
