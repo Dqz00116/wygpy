@@ -2,10 +2,13 @@
 """
     作者：源渋 d_qz@foxmai.com
     日期：2021/5/9
+    最后修改日期：2021/5/21
+    图源：干炸里脊资源 https://redive.estertion.win/
     用法：re_catch.py [option]
     option: card        获取公主链接卡面
             title_bg    获取bangbang主题背景
-            ……
+            comic       获取公主链接小漫画
+            story       获取公主链接剧情立绘
     P.S.每次运行后都可以覆盖更新，隔段时间运行一下就可以了，持续更新中……
 """
 import sys
@@ -21,6 +24,9 @@ class Catcher(object):
         self.url_source_list = {
             'card': 'https://redive.estertion.win/card/full/',
             'title_bg': 'https://redive.estertion.win/bang/title_bg/',
+            'comic': 'https://redive.estertion.win/comic/',
+            'story': 'https://redive.estertion.win/card/story/'
+
         }
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (K'
@@ -72,7 +78,10 @@ class Catcher(object):
     def error_response(self, error):
         print("OptionError: %s\n"
               "Syntax: re_catch.py [option]\n"
-              "[option]: card        获取公主链接卡面\n\t  title_bg    获取bangbang主题背景" % error)
+              "[option]: card        获取公主链接卡面"
+              "\n\t  comic       获取公主链接小漫画"
+              "\n\t  story       获取公主链接剧情立绘" 
+              "\n\t  title_bg    获取bangbang主题背景"% error)
         exit()
 
     def run(self):
