@@ -16,7 +16,12 @@ from multiprocessing import Pool
 
 
 class Catcher(object):
+
     def __init__(self):
+        self.url_source_list = {
+            'card': 'https://redive.estertion.win/card/full/',
+            'title_bg': 'https://redive.estertion.win/bang/title_bg/',
+        }
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (K'
                           'HTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36 Edg/90.0.818.56'
@@ -25,20 +30,12 @@ class Catcher(object):
         try:
             self.option = sys.argv[1]
         except IndexError:
-            print("OptionError: No option, please enter option after 're_catch.py'\n"
-                  "Syntax: re_catch.py [option]\n"
-                  "[option]: card        获取公主链接卡面\n\t  title_bg    获取bangbang主题背景")
-            exit()
+            self.error_response("No option, please enter option after 're_catch.py'")
         # self.url_source 目标地址
-        if self.option == 'card':
-            self.url_source = 'https://redive.estertion.win/card/full/'
-        elif self.option == 'title_bg':
-            self.url_source = 'https://redive.estertion.win/bang/title_bg/'
+        if self.option in list(self.url_source_list.keys()):
+            self.url_source = self.url_source_list[self.option]
         else:
-            print("OptionError: Uncorrected option, please check option you enter\n"
-                  "Syntax: re_catch.py [option]\n"
-                  "[option]: card        获取公主链接卡面\n\t  title_bg    获取bangbang主题背景")
-            exit()
+            self.error_response("Uncorrected option, please check option you enter")
 
     # 创建/自动更新（迫真）文件夹
     def mkcard(self, option):
@@ -66,11 +63,17 @@ class Catcher(object):
         response_card = requests.get(url=url_card, headers=self.headers)  # 发送请求
         file_name = self.join_list(href_card)
         if response_card.status_code == 200:  # 如果请求成功
-            with open(path + '/'+file_name, 'wb') as file:
+            with open(path + '/' + file_name, 'wb') as file:
                 file.write(response_card.content)  # 写入图片
 
     def join_list(self, item):
         return ''.join(item)
+
+    def error_response(self, error):
+        print("OptionError: %s\n"
+              "Syntax: re_catch.py [option]\n"
+              "[option]: card        获取公主链接卡面\n\t  title_bg    获取bangbang主题背景" % error)
+        exit()
 
     def run(self):
         self.mkcard(self.option)
